@@ -1,6 +1,6 @@
 
 from PyQt5.QtWidgets import ( QApplication, QMainWindow, QDesktopWidget, QLabel, QScrollArea, QAction, QWidget,
-                              QSizePolicy, QFileDialog, QDialog, QVBoxLayout, QHBoxLayout, QPushButton )
+                              QSizePolicy, QFileDialog, QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit )
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtCore import Qt
 from sys import argv, exit
@@ -26,7 +26,7 @@ class AboutPanel(QDialog):
         super().__init__(window)
         self.setWindowTitle('About')
         self.setWindowIcon(QIcon(p+'about.png'))
-        self.setFixedSize(400, 220)
+        self.setFixedSize(470, 260)
         layout = QVBoxLayout()
         
         layout.addWidget(QLabel(
@@ -60,6 +60,37 @@ class AboutPanel(QDialog):
         layout.addLayout(button_layout)
         
         self.setLayout(layout)
+
+
+class InputPanel(QDialog):
+    def __init__(self):
+        super().__init__(window)
+        self.setWindowTitle('Text input')
+        self.setWindowIcon(QIcon(p+'write.png'))
+        self.setMinimumSize(400, 300)
+        
+        layout = QVBoxLayout()
+        
+        self.editor = QTextEdit(self)
+        self.editor.setAcceptRichText(False)
+        
+        layout.addWidget(self.editor)
+        
+        yes_button = QPushButton('ok', self)
+        yes_button.clicked.connect(self.accept)
+        cancel_button = QPushButton('cancel', self)
+        cancel_button.clicked.connect(self.reject)
+        
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        button_layout.addWidget(yes_button)
+        button_layout.addWidget(cancel_button)
+        layout.addLayout(button_layout)
+        
+        self.setLayout(layout)
+    
+    def get_text(self):
+        return self.editor.toPlainText()
 
 
 class Window(QMainWindow):
@@ -144,10 +175,15 @@ class Window(QMainWindow):
         self.label.setText(formatted)
     
     def write(self):
-        text = input('enter text : ')
-        if text.isspace() or text == '':
-            text = default_text
-        self.set_text(text)
+        dialog = InputPanel()
+        
+        if dialog.exec():
+            text = dialog.get_text()
+            
+            if text.isspace() or text == '':
+                text = default_text
+            
+            self.set_text(text)
     
     def from_file(self):
         path = QFileDialog().getOpenFileName()[0]
