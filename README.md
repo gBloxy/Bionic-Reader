@@ -5,7 +5,7 @@ A very simple bionic reading tool implemented in python.
 ## Usage
 
 Execute the `bionic-reader.py` file to launch the software.  
-To make text bionic readable, click on the write button and input you text with the console or click on the open file button to import a basic .txt file.  
+To make text bionic readable, click on the write button and input you text in the text dialog or click on the open file button to import a basic .txt file.  
 Click on the remove button to reset the text.
 
 ## Requirements

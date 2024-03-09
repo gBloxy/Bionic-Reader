@@ -17,7 +17,7 @@ separators_str = r'([,:\s\n;.\-(){}\[\]])'
 separators = [':', ',', ';', '.', '-', '{', '}', '(', ')', '[', ']', '<br>']
 
 default_text = ('This is a bionic reader tool.\n'
-                'Enter text with the command shell or open a file '
+                'Enter text by pressing the write button or open a .txt file '
                 'to make the first letters of each words bolds and speed up your reading time.')
 
 
@@ -33,7 +33,7 @@ class AboutPanel(QDialog):
             'This is a bionic reader tool python implementation made by g_Bloxy.\n'
             ))
         layout.addWidget(QLabel((
-            'To make text bionic readable, click on the write button and input you text\nwith the console '
+            'To make text bionic readable, click on the write button and input you text\nin the text box dialog '
             'or click on the open file button to import a basic .txt file.\n'
             'Click on the remove button to reset the text.\n'
             )))
