@@ -1,9 +1,10 @@
 
-from PyQt5.QtWidgets import ( QApplication, QMainWindow, QDesktopWidget, QLabel, QScrollArea, QAction, QWidget,
-                              QSizePolicy, QFileDialog, QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit )
+from PyQt5.QtWidgets import ( QApplication, QMainWindow, QDesktopWidget, QLabel, QScrollArea, QAction, QWidget, QSizePolicy,
+                              QFileDialog, QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTextEdit, QMessageBox )
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtCore import Qt
 from sys import argv, exit
+from os.path import sep
 from re import split
 
 
@@ -12,7 +13,7 @@ FONT = 'verdana'
 FONT_SIZE = 14
 
 
-p = 'asset\\'
+p = 'asset' + sep
 separators_str = r'([,:\s\n;.\-(){}\[\]])'
 separators = [':', ',', ';', '.', '-', '{', '}', '(', ')', '[', ']', '<br>']
 
@@ -190,7 +191,11 @@ class Window(QMainWindow):
         
         if not (path.isspace() or path == ''):
             with open(path, 'r') as file:
-                text = file.read()
+                try:
+                    text = file.read()
+                except:
+                    QMessageBox.critical(self, 'Warning', 'Unable to read this file : ' + path)
+                    return
             
             if text.isspace() or text == '':
                 text = default_text
